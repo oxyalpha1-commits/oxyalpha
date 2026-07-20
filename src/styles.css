@@ -1,0 +1,320 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-aqua: var(--aqua);
+  --color-fresh: var(--fresh);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+:root {
+  --radius: 1rem;
+  /* Brand */
+  --primary: oklch(0.42 0.11 249); /* #0F4C81 deep blue */
+  --primary-foreground: oklch(0.99 0.005 240);
+  --aqua: oklch(0.79 0.14 220); /* #2EC4F1 aqua */
+  --fresh: oklch(0.5 0.11 155); /* #2F855A fresh green */
+  --ink: oklch(0.2 0.03 250);
+  --soft: oklch(0.97 0.02 240);
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.03 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.03 250);
+  --secondary: oklch(0.97 0.02 240);
+  --secondary-foreground: oklch(0.2 0.03 250);
+  --muted: oklch(0.97 0.02 240);
+  --muted-foreground: oklch(0.5 0.03 250);
+  --accent: oklch(0.79 0.14 220);
+  --accent-foreground: oklch(0.15 0.05 250);
+  --destructive: oklch(0.6 0.24 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.02 240);
+  --input: oklch(0.92 0.02 240);
+  --ring: oklch(0.79 0.14 220);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility glass {
+  background: color-mix(in oklab, white 70%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 60%, transparent);
+}
+
+@utility soft-shadow {
+  box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -18px color-mix(in oklab, var(--primary) 30%, transparent);
+  }
+}
+
+@utility gradient-hero {
+  background:
+    radial-gradient(
+      1200px 600px at 85% -10%,
+      color-mix(in oklab, var(--aqua) 30%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at -10% 20%,
+      color-mix(in oklab, var(--primary) 18%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f4f9fd 100%);
+}
+
+@utility gradient-soft {
+  background: linear-gradient(180deg, #ffffff 0%, #eef6fb 100%);
+}
+
+@utility text-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--aqua));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--fresh) 60%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 18px color-mix(in oklab, var(--fresh) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--fresh) 0%, transparent);
+  }
+}
+
+@utility animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+@utility animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility animate-fade-left {
+  animation: fade-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility animate-fade-right {
+  animation: fade-right 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility animate-pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+/* Premium glass water-drop cursor. Desktop-only; React also disables it for touch/reduced-motion. */
+@media (min-width: 992px) and (hover: hover) and (pointer: fine) {
+  html.has-glass-water-cursor,
+  html.has-glass-water-cursor * {
+    cursor: none !important;
+  }
+
+  .glass-water-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2147483647;
+    width: 20px;
+    height: 22px;
+    pointer-events: none;
+    border: 1px solid color-mix(in oklab, white 64%, var(--aqua) 36%);
+    border-radius: 68% 72% 74% 76% / 76% 76% 58% 58%;
+    background:
+      radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.96) 0 9%, transparent 10%),
+      radial-gradient(circle at 68% 72%, rgba(255, 255, 255, 0.38) 0 13%, transparent 15%),
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.72),
+        rgba(124, 218, 244, 0.34) 40%,
+        rgba(13, 105, 172, 0.2)
+      );
+    box-shadow:
+      inset 2px 3px 8px rgba(255, 255, 255, 0.78),
+      inset -3px -4px 9px rgba(9, 83, 139, 0.2),
+      0 8px 22px rgba(15, 76, 129, 0.22);
+    opacity: 0.92;
+    transform: translate3d(-50px, -50px, 0) translate(-50%, -50%);
+    transition:
+      width 200ms ease,
+      height 200ms ease,
+      filter 200ms ease,
+      border-radius 200ms ease,
+      opacity 200ms ease;
+    will-change: transform, width, height, filter, opacity;
+  }
+
+  .glass-water-cursor::before {
+    content: "";
+    position: absolute;
+    inset: 3px 5px auto auto;
+    width: 5px;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), transparent);
+    opacity: 0.82;
+    transform: rotate(-22deg);
+  }
+
+  .glass-water-cursor::after {
+    content: "";
+    position: absolute;
+    inset: 5px 4px 4px 5px;
+    border-radius: inherit;
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    opacity: 0.78;
+  }
+
+  .glass-water-cursor.is-hovering {
+    width: 23px;
+    height: 28px;
+    filter: drop-shadow(0 0 12px rgba(46, 196, 241, 0.5));
+    border-color: rgba(165, 236, 255, 0.88);
+    opacity: 0.98;
+  }
+
+  .glass-water-ripple-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .glass-water-ripple {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    border: 1px solid rgba(101, 211, 245, 0.72);
+    border-radius: 999px;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.35),
+      0 0 16px rgba(46, 196, 241, 0.26);
+    opacity: 0.75;
+    animation: glass-water-ripple 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+  }
+}
+
+@keyframes glass-water-ripple {
+  to {
+    opacity: 0;
+    transform: translate3d(var(--ripple-x), var(--ripple-y), 0) translate(-50%, -50%) scale(4.6);
+  }
+}
+
+@media (max-width: 991px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  html.has-glass-water-cursor,
+  html.has-glass-water-cursor * {
+    cursor: auto !important;
+  }
+
+  .glass-water-cursor,
+  .glass-water-ripple-layer {
+    display: none !important;
+  }
+}
