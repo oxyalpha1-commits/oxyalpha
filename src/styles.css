@@ -96,16 +96,72 @@
   border: 1px solid color-mix(in oklab, white 60%, transparent);
 }
 
+@utility glass-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58)),
+    color-mix(in oklab, white 76%, var(--aqua) 8%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 18px 50px -26px color-mix(in oklab, var(--primary) 36%, transparent);
+}
+
+@utility water-shine {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.72), transparent 24%),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.42), transparent 34%);
+    opacity: 0.68;
+    transform: translateX(-8%);
+    transition:
+      opacity 0.45s ease,
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: -45%;
+    width: 36%;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+    opacity: 0;
+    transform: skewX(-16deg);
+  }
+  &:hover::before {
+    opacity: 0.9;
+    transform: translateX(0);
+  }
+  &:hover::after {
+    animation: glass-sheen 1.15s ease;
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
 @utility soft-shadow {
   box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--primary) 20%, transparent);
 }
 
 @utility hover-lift {
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease;
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease,
+    filter 0.45s ease;
   &:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
+    filter: saturate(1.04);
     box-shadow: 0 20px 40px -18px color-mix(in oklab, var(--primary) 30%, transparent);
   }
 }
@@ -136,6 +192,55 @@
   color: transparent;
 }
 
+@keyframes glass-sheen {
+  0% {
+    transform: translateX(-120%) skewX(-16deg);
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.75;
+  }
+  62%,
+  100% {
+    transform: translateX(140%) skewX(-16deg);
+    opacity: 0;
+  }
+}
+
+@keyframes water-drift {
+  0%,
+  100% {
+    background-position:
+      0% 50%,
+      100% 0%,
+      0 0;
+  }
+  50% {
+    background-position:
+      100% 50%,
+      0% 100%,
+      0 0;
+  }
+}
+
+@keyframes soft-pop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@utility animate-water-drift {
+  animation: water-drift 18s ease-in-out infinite;
+}
+
+@utility animate-soft-pop {
+  animation: soft-pop 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 @keyframes float-y {
   0%,
   100% {
@@ -203,6 +308,16 @@
   animation: pulse-ring 2s infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
 /* Premium glass water-drop cursor. Desktop-only; React also disables it for touch/reduced-motion. */
 @media (min-width: 992px) and (hover: hover) and (pointer: fine) {
   html.has-glass-water-cursor,
