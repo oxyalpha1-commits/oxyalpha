@@ -220,7 +220,7 @@ function EnquiryModal({ open, onClose }: { open: boolean; onClose: () => void })
         </button>
         <div className="relative hidden min-h-[520px] overflow-hidden lg:block">
           <img
-            src="/fast-delivery.jpg"
+            src="/fast-delivery.png"
             alt="Oxyalpha packaged drinking water delivery"
             className="h-full w-full object-cover"
           />
@@ -629,138 +629,95 @@ function PrivateLabelSolutions() {
 }
 /* ---------- Delivery Service ---------- */
 function WhyUs() {
-  const benefits = [
-    {
-      icon: Clock,
-      title: "Delivery Within 2 Hours",
-      text: "Quick dispatch for homes, offices, shops, and events.",
-    },
-    {
-      icon: Truck,
-      title: "Free Doorstep Delivery",
-      text: "No extra delivery charge across active service areas.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Available 7 Days A Week",
-      text: "Reliable supply support from morning to late evening.",
-    },
-  ];
-  const coverage = [
-    { icon: MapPin, value: "50 KM", label: "Delivery Radius" },
-    { icon: Truck, value: "10+", label: "Delivery Partners" },
-    { icon: ShieldCheck, value: "Pune, PCMC & Lonavala", label: "Coverage" },
-  ];
+  const points = ["Free Delivery", "7 Days In A Week Service"];
 
   return (
-    <section
-      id="why"
-      className="animate-water-drift relative overflow-hidden bg-[oklch(0.98_0.015_235)] py-24"
-    >
-      <div
-        aria-hidden="true"
-        className="absolute left-[-6rem] top-12 hidden h-64 w-64 rounded-full bg-[oklch(0.79_0.14_220)]/15 blur-3xl md:block"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute bottom-10 right-[-5rem] hidden h-72 w-72 rounded-full bg-primary/10 blur-3xl lg:block"
-      />
+    <section id="why" className="relative overflow-hidden bg-white py-16">
       <svg
         aria-hidden="true"
-        viewBox="0 0 600 80"
-        className="absolute left-0 top-8 hidden h-20 w-full text-primary/5 lg:block"
+        viewBox="0 0 1440 72"
+        className="absolute inset-x-0 top-0 z-20 h-12 w-full text-white sm:h-16"
         preserveAspectRatio="none"
       >
         <path
-          d="M0 42c38 0 38-22 76-22s38 22 76 22 38-22 76-22 38 22 76 22 38-22 76-22 38 22 76 22 38-22 76-22 38 22 76 22"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="10"
-          strokeLinecap="round"
+          d="M0 22c170 30 330 26 510 4 216-26 426-28 650-2 110 13 200 9 280-3V0H0z"
+          fill="currentColor"
         />
       </svg>
+      <div className="animate-water-drift relative overflow-hidden bg-[oklch(0.34_0.14_255)] pt-20 pb-20 text-white sm:pt-24 lg:pt-28">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_16%_38%,rgba(255,255,255,0.08),transparent_34%),radial-gradient(circle_at_76%_12%,rgba(46,196,241,0.18),transparent_32%),linear-gradient(135deg,rgba(15,76,129,0.72),rgba(20,68,169,0.92))]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -left-24 top-10 h-[30rem] w-[30rem] rounded-full bg-black/10"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute bottom-[-12rem] right-[-6rem] h-[34rem] w-[34rem] rounded-full bg-white/5"
+        />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-[1fr_0.92fr] md:px-6 lg:gap-16">
-        <div data-reveal>
-          <span className="inline-flex rounded-full border border-primary/10 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[oklch(0.7_0.15_220)] shadow-sm">
-            Quick Water Delivery
-          </span>
-          <h2 className="mt-5 max-w-2xl font-display text-3xl leading-tight text-primary sm:text-4xl lg:text-5xl">
-            Fresh Water <span className="text-[oklch(0.7_0.15_220)]">Delivered</span> Right To Your{" "}
-            <span className="text-[oklch(0.7_0.15_220)]">Doorstep</span>
-          </h2>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground/65">
-            We provide fast and dependable water delivery across Pimpri-Chinchwad, Pune and Lonavala
-            through our trusted delivery network.
-          </p>
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 md:grid-cols-2 md:px-6 lg:gap-16">
+          <div data-reveal="left" className="mx-auto w-full max-w-xl md:order-1">
+            <div className="relative mx-auto max-w-lg">
+              <div className="absolute inset-8 rounded-full bg-[oklch(0.79_0.14_220)]/18 blur-3xl" />
+              <img
+                src="/fast-delivery.png"
+                alt="Fast packaged drinking water delivery service"
+                loading="lazy"
+                className="relative z-10 mx-auto aspect-[4/3] w-full rounded-3xl object-cover shadow-[0_30px_80px_rgba(0,0,0,0.22)]"
+              />
+            </div>
+          </div>
 
-          <div className="mt-8 grid gap-4">
-            {benefits.map((benefit, i) => {
-              const Icon = benefit.icon;
-              return (
-                <article
-                  key={benefit.title}
-                  data-reveal
-                  style={{ transitionDelay: `${i * 70}ms` }}
-                  className="glass-card group flex items-start gap-4 rounded-2xl p-4 transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(15,76,129,0.12)]"
+          <div data-reveal="right" className="md:order-2">
+            <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[oklch(0.85_0.11_220)] backdrop-blur">
+              Delivery Service
+            </span>
+            <h2 className="mt-5 max-w-xl font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">
+              Ready To Get Our Premium Water Delivery Service.
+            </h2>
+            <p className="mt-6 max-w-xl text-sm leading-7 text-white/80">
+              We offer delivery within a 50 km radius, covering Pimpri-Chinchwad, Pune and Lonavala
+              through a dependable network of 10+ delivery partners.
+            </p>
+
+            <ul className="mt-6 space-y-4">
+              {points.map((point) => (
+                <li
+                  key={point}
+                  className="flex items-center gap-3 text-sm font-semibold text-white/95"
                 >
-                  <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary/10 text-primary transition duration-300 group-hover:scale-105 group-hover:bg-primary group-hover:text-primary-foreground">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-lg text-primary">{benefit.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-foreground/60">
-                      {benefit.text}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-white/18 text-[oklch(0.86_0.12_220)]">
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
 
-          <div className="mt-8 glass-card rounded-2xl p-4">
-            <div className="grid gap-3 sm:grid-cols-3">
-              {coverage.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.label} className="rounded-2xl bg-secondary p-4">
-                    <div className="flex items-center gap-2 text-primary">
-                      <Icon className="h-4 w-4" />
-                      <span className="text-sm font-semibold">{item.value}</span>
-                    </div>
-                    <p className="mt-1 text-xs uppercase tracking-[0.14em] text-foreground/45">
-                      {item.label}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div data-reveal="right" className="relative mx-auto w-full max-w-xl md:max-w-none">
-          <div className="glass-card relative rounded-2xl p-4 sm:p-5">
-            <div
-              aria-hidden="true"
-              className="absolute inset-6 rounded-full bg-[oklch(0.79_0.14_220)]/12"
-            />
-            <img
-              src="/fast-delivery.jpg"
-              alt="Fast packaged drinking water delivery service"
-              loading="lazy"
-              className="relative z-10 aspect-[4/3] w-full rounded-2xl object-cover"
-            />
-            <div className="motion-safe:animate-float absolute -left-2 top-10 z-30 rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-[0_16px_35px_rgba(15,76,129,0.12)] backdrop-blur sm:-left-5">
-              <div className="font-display text-2xl text-primary">2 Hr</div>
-              <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Delivery</div>
-            </div>
-            <div className="motion-safe:animate-float absolute -bottom-5 right-4 z-30 rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-[0_16px_35px_rgba(15,76,129,0.12)] backdrop-blur sm:right-8">
-              <div className="font-display text-2xl text-primary">100%</div>
-              <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Safe</div>
-            </div>
+            <a
+              href="#process"
+              className="group mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[oklch(0.79_0.14_220)] px-7 py-3 text-sm font-semibold text-primary shadow-[0_18px_40px_rgba(46,196,241,0.24)] transition hover:-translate-y-1 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            >
+              Our Services
+              <Send className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
         </div>
       </div>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1440 74"
+        className="absolute inset-x-0 bottom-0 z-20 h-12 w-full text-white sm:h-16"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0 34c150 25 306 24 470 5 212-24 348 40 558 18 192-20 276-45 412-18v35H0z"
+          fill="currentColor"
+        />
+      </svg>
     </section>
   );
 }
@@ -1034,7 +991,7 @@ function Contact() {
                   t: "Address",
                   d: "Gat No 270/2/2 Plot No 3,4 Nannaj Tal North Solapur 413222",
                 },
-                { i: Clock, t: "Hours", d: "Mon–Sun • 7 AM – 10 PM" },
+                { i: Clock, t: "Hours", d: "Mon-Sun: 9 AM - 6 PM | Wed: Closed" },
               ].map((c) => {
                 const Icon = c.i;
                 return (
