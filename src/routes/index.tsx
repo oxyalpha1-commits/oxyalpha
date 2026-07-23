@@ -114,7 +114,7 @@ function Nav() {
             <img
               src={oxyalphaLogo}
               alt="OxyAlpha"
-              className="h-9 w-auto shrink-0 object-contain sm:h-12 lg:h-14"
+              className="h-11 w-auto shrink-0 object-contain sm:h-14 lg:h-16"
             />
           </a>
           <nav className="hidden items-center gap-7 lg:flex">
@@ -784,8 +784,8 @@ function Products() {
     { name: "200 ml Oxyalpha Water Bottle", size: "200 ml", price: "5.00", image: "/200 ml (2).png" },
     { name: "500 ml Mineral Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml.png" },
     { name: "500 ml Oxyalpha Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml (2).png" },
-    { name: "1 Litre Mineral Water Bottle", size: "1 Litre", price: "18.00", image: "/1 litre.png" },
-    { name: "1 Litre Oxyalpha Water Bottle", size: "1 Litre", price: "18.00", image: "/1 litre (2).png" },
+    { name: "1 Litre Mineral Water Bottle", size: "1 Litre", price: "20.00", image: "/1 litre.png" },
+    { name: "1 Litre Oxyalpha Water Bottle", size: "1 Litre", price: "20.00", image: "/1 litre (2).png" },
     { name: "2 Litre Mineral Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre.png" },
     { name: "2 Litre Oxyalpha Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre (2).png" },
   ];
