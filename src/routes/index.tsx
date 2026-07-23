@@ -807,7 +807,7 @@ function Products() {
               key={product.image}
               data-reveal
               style={{ transitionDelay: `${i * 70}ms` }}
-              className="glass-card water-shine group flex min-h-[380px] flex-col items-center justify-end px-5 py-7 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)] sm:min-h-[410px] lg:px-6"
+              className="glass-card group flex min-h-[380px] flex-col items-center justify-end px-5 py-7 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)] sm:min-h-[410px] lg:px-6"
             >
               <div className="flex h-52 w-full items-center justify-center sm:h-60">
                 <img
