@@ -25,10 +25,6 @@ import {
 
 import oxyalphaProduct from "@/assets/oxyalpha-product.png";
 import mountainSpring from "@/assets/mountain-spring.jpg";
-import bottle500 from "@/assets/bottle-500.jpg";
-import bottle1l from "@/assets/bottle-1l.jpg";
-import bulkBottle from "@/assets/bulk.jpg";
-import jar20l from "@/assets/jar-20l.jpg";
 import oxyalphaLogo from "@/assets/oxyalpha_logo.png";
 import whatsappIcon from "@/assets/whatsapp_icon.png";
 import { GlassWaterCursor } from "@/components/GlassWaterCursor";
@@ -315,8 +311,9 @@ function Hero() {
       />
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-4">
         <div className="relative z-20" data-reveal>
-          <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-primary/15 bg-white/70 px-3 py-1.5 text-[11px] font-medium text-primary sm:px-4 sm:text-xs">
-            <Sparkles className="h-3.5 w-3.5" /> Certified Pure • ISO 22000
+          <span className="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-primary/15 bg-white/70 px-3 py-1.5 text-[11px] font-medium leading-relaxed text-primary sm:px-4 sm:text-xs">
+            <Sparkles className="h-3.5 w-3.5 shrink-0" />
+            <span>Certified Pure | ISO 9001:2015 | ISO 22000:2018</span>
           </span>
           <h1 className="mt-5 font-display text-[2.35rem] leading-[1.04] text-primary sm:text-5xl lg:text-6xl">
             Pure Drinking Water
@@ -783,12 +780,14 @@ function Stats() {
 /* ---------- Products ---------- */
 function Products() {
   const products = [
-    { size: "200 ml", price: "5.00", image: bottle500, imageClass: "max-h-44" },
-    { size: "500 ml", price: "10.00", image: bottle500, imageClass: "max-h-56" },
-    { size: "1 Liter", price: "18.00", image: bottle1l, imageClass: "max-h-60" },
-    { size: "2 Liter", price: "30.00", image: bottle1l, imageClass: "max-h-64" },
-    { size: "5 Liter Jars", price: "60.00", image: bulkBottle, imageClass: "max-h-64" },
-    { size: "20 Liter Jars", price: "40.00", image: jar20l, imageClass: "max-h-56" },
+    { name: "200 ml Mineral Water Bottle", size: "200 ml", price: "5.00", image: "/200 ml.png" },
+    { name: "200 ml Oxyalpha Water Bottle", size: "200 ml", price: "5.00", image: "/200 ml (2).png" },
+    { name: "500 ml Mineral Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml.png" },
+    { name: "500 ml Oxyalpha Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml (2).png" },
+    { name: "1 Litre Mineral Water Bottle", size: "1 Litre", price: "18.00", image: "/1 litre.png" },
+    { name: "1 Litre Oxyalpha Water Bottle", size: "1 Litre", price: "18.00", image: "/1 litre (2).png" },
+    { name: "2 Litre Mineral Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre.png" },
+    { name: "2 Litre Oxyalpha Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre (2).png" },
   ];
 
   return (
@@ -802,20 +801,20 @@ function Products() {
             Packaged water for every need
           </h2>
         </div>
-        <div className="mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {products.map((product, i) => (
             <article
-              key={product.size}
+              key={product.image}
               data-reveal
               style={{ transitionDelay: `${i * 70}ms` }}
-              className="glass-card water-shine group flex min-h-[430px] flex-col items-center justify-end px-8 py-8 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)]"
+              className="glass-card water-shine group flex min-h-[380px] flex-col items-center justify-end px-5 py-7 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)] sm:min-h-[410px] lg:px-6"
             >
-              <div className="flex h-64 w-full items-end justify-center">
+              <div className="flex h-52 w-full items-center justify-center sm:h-60">
                 <img
                   src={product.image}
-                  alt={`${product.size} Oxyalpha mineral water bottle`}
+                  alt={product.name}
                   loading="lazy"
-                  className={`w-full object-contain drop-shadow-[0_18px_18px_rgba(15,23,42,0.12)] transition duration-500 group-hover:scale-105 ${product.imageClass}`}
+                  className="max-h-full w-full object-contain drop-shadow-[0_18px_18px_rgba(15,23,42,0.12)] transition duration-500 group-hover:scale-105"
                 />
               </div>
               <svg
@@ -832,7 +831,7 @@ function Products() {
                 />
               </svg>
               <p className="mt-6 text-base text-foreground/50">{product.size}</p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-[oklch(0.22_0.06_255)]">
+              <h3 className="mt-3 font-display text-2xl font-semibold text-[oklch(0.22_0.06_255)] xl:text-xl">
                 Mineral Water Bottle
               </h3>
               <p className="mt-6 text-xl font-semibold text-[oklch(0.72_0.16_220)]">
@@ -852,37 +851,31 @@ function Testimonials() {
       name: "Priya Sharma",
       role: "Homemaker",
       text: "Switched to Oxyalpha a year ago and never looked back. The taste and freshness are unmatched.",
-      avatar: "https://i.pravatar.cc/120?img=47",
     },
     {
       name: "Rohan Mehta",
       role: "Office Manager",
       text: "They deliver on time, every time. Our whole office runs on Oxyalpha jars now.",
-      avatar: "https://i.pravatar.cc/120?img=12",
     },
     {
       name: "Ananya Iyer",
       role: "Fitness Coach",
       text: "Clean water is non-negotiable for me. Oxyalpha feels light, pure and genuinely premium.",
-      avatar: "https://i.pravatar.cc/120?img=32",
     },
     {
       name: "Vikram Nair",
       role: "Restaurant Owner",
       text: "Reliable bulk supply and impeccable quality. Our customers keep noticing the difference.",
-      avatar: "https://i.pravatar.cc/120?img=15",
     },
     {
       name: "Sneha Kulkarni",
       role: "Cafe Owner",
       text: "The jars are always sealed, clean, and delivered right when our team needs them.",
-      avatar: "https://i.pravatar.cc/120?img=44",
     },
     {
       name: "Amit Patil",
       role: "Society Chairman",
       text: "Oxyalpha made regular water supply simple for our entire apartment community.",
-      avatar: "https://i.pravatar.cc/120?img=68",
     },
   ];
   const slides = Array.from({ length: Math.ceil(reviews.length / 3) }, (_, i) =>
@@ -929,7 +922,7 @@ function Testimonials() {
                       </p>
                       <div className="mt-6 flex items-center gap-3">
                         <img
-                          src={r.avatar}
+                          src="/profile.png"
                           alt={r.name}
                           className="h-12 w-12 rounded-full object-cover"
                           loading="lazy"
