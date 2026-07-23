@@ -39,6 +39,25 @@ const NAV = [
   { label: "Contact Us", href: "#contact" },
 ];
 
+const FORM_ACCESS_KEY = "0364c373-0321-4245-a8cb-2a18e213c0e3";
+
+async function submitWebsiteForm(form: HTMLFormElement, subject: string) {
+  const formData = new FormData(form);
+  formData.set("access_key", FORM_ACCESS_KEY);
+  formData.set("subject", subject);
+  formData.set("from_name", "Oxyalpha Website");
+
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    body: formData,
+  });
+  const result = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "Unable to send form");
+  }
+}
+
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -71,6 +90,7 @@ export default function App() {
       <Nav />
       <main id="home">
         <Hero />
+        <QualityStrip />
         <About />
         <Process />
         <PrivateLabelSolutions />
@@ -179,6 +199,8 @@ function Nav() {
 
 function EnquiryModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!open) return;
@@ -234,17 +256,29 @@ function EnquiryModal({ open, onClose }: { open: boolean; onClose: () => void })
           </div>
         </div>
         <form
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            setSent(true);
-            setTimeout(() => {
-              setSent(false);
-              onClose();
-            }, 1800);
-            (event.currentTarget as HTMLFormElement).reset();
+            const form = event.currentTarget as HTMLFormElement;
+            setSubmitting(true);
+            setError("");
+            try {
+              await submitWebsiteForm(form, "New Oxyalpha enquiry");
+              setSent(true);
+              form.reset();
+              setTimeout(() => {
+                setSent(false);
+                onClose();
+              }, 1800);
+            } catch {
+              setError("Could not send enquiry. Please try again or call us directly.");
+            } finally {
+              setSubmitting(false);
+            }
           }}
           className="p-6 pb-8 sm:overflow-y-auto sm:p-8 lg:p-10"
         >
+          <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />
+          <input type="hidden" name="form_name" value="Enquiry form" />
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[oklch(0.7_0.15_220)]">
             Enquiry
           </p>
@@ -274,9 +308,10 @@ function EnquiryModal({ open, onClose }: { open: boolean; onClose: () => void })
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="submit"
-              className="hover-lift inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground soft-shadow sm:w-auto"
+              disabled={submitting}
+              className="hover-lift inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground soft-shadow disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
             >
-              <Send className="h-4 w-4" /> Submit Enquiry
+              <Send className="h-4 w-4" /> {submitting ? "Sending..." : "Submit Enquiry"}
             </button>
             <button
               type="button"
@@ -290,6 +325,7 @@ function EnquiryModal({ open, onClose }: { open: boolean; onClose: () => void })
                 Thanks, we will contact you shortly.
               </span>
             )}
+            {error && <span className="text-sm text-destructive">{error}</span>}
           </div>
         </form>
       </div>
@@ -322,7 +358,7 @@ function Hero() {
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-7 text-foreground/70 sm:text-lg sm:leading-relaxed">
             Sourced from pristine springs, refined through 9-stage RO+UV purification, and delivered
-            fresh — Oxyalpha keeps every sip crystal-clear, safe, and effortlessly premium.
+            fresh, so Oxyalpha keeps every sip crystal-clear, safe, and effortlessly premium.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
             <a
@@ -363,7 +399,7 @@ function Hero() {
               width={1024}
               height={1024}
               alt="Oxyalpha packaged drinking water bottle with fresh water splash"
-              className="animate-float relative z-10 mx-auto aspect-square max-h-[360px] w-full max-w-[360px] rounded-[2rem] object-cover drop-shadow-[0_30px_50px_rgba(15,76,129,0.25)] sm:max-h-[560px] sm:max-w-[560px]"
+              className="animate-float relative z-10 mx-auto aspect-square max-h-[360px] w-full max-w-[360px] object-contain drop-shadow-[0_34px_58px_rgba(15,76,129,0.28)] sm:max-h-[560px] sm:max-w-[560px]"
             />
           </div>
         </div>
@@ -372,6 +408,58 @@ function Hero() {
   );
 }
 
+function QualityStrip() {
+  const items = [
+    {
+      icon: ShieldCheck,
+      title: "Certified Safety",
+      text: "ISO 9001:2015 and ISO 22000:2018 quality practices.",
+    },
+    {
+      icon: Filter,
+      title: "9-Stage Purity",
+      text: "RO + UV filtration with routine quality checks.",
+    },
+    {
+      icon: Sparkles,
+      title: "Freshly Sealed",
+      text: "Clean packaging that keeps every bottle crisp and ready.",
+    },
+    {
+      icon: Truck,
+      title: "Reliable Delivery",
+      text: "Prompt doorstep supply for homes, offices, and events.",
+    },
+  ];
+
+  return (
+    <section className="relative z-10 -mt-6 pb-16 sm:-mt-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-4">
+        <div className="grid gap-3 rounded-3xl border border-white/70 bg-white/85 p-3 shadow-[0_24px_70px_rgba(15,76,129,0.12)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="flex items-start gap-3 rounded-2xl px-3 py-4 transition hover:bg-[oklch(0.98_0.018_235)] sm:px-4"
+              >
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary/10 text-primary">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold text-primary">{item.title}</span>
+                  <span className="mt-1 block text-xs leading-5 text-foreground/58">
+                    {item.text}
+                  </span>
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 /* ---------- About ---------- */
 function About() {
   return (
@@ -399,7 +487,7 @@ function About() {
           <p className="mt-5 leading-relaxed text-foreground/70">
             Oxyalpha, powered by Sarika Food's & Beverages Private Limited, has redefined what
             packaged drinking water should feel like. From sourcing to sealing, every stage is
-            engineered with obsessive care to deliver water that's not just safe — but genuinely
+            engineered with obsessive care to deliver water that's not just safe, but genuinely
             refreshing.
           </p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -438,13 +526,13 @@ function Process() {
   const services = [
     {
       icon: Package,
-      title: "Residential Waters",
+      title: "Residential Water",
       text: "Pure, safe drinking water tailored for every home.",
       position: "lg:col-start-1 lg:row-start-1",
     },
     {
       icon: Truck,
-      title: "Commercial Waters",
+      title: "Commercial Water",
       text: "Reliable water solutions for businesses of all sizes.",
       position: "lg:col-start-3 lg:row-start-1",
     },
@@ -781,13 +869,43 @@ function Stats() {
 function Products() {
   const products = [
     { name: "200 ml Mineral Water Bottle", size: "200 ml", price: "5.00", image: "/200 ml.png" },
-    { name: "200 ml Oxyalpha Water Bottle", size: "200 ml", price: "5.00", image: "/200 ml (2).png" },
+    {
+      name: "200 ml Oxyalpha Water Bottle",
+      size: "200 ml",
+      price: "5.00",
+      image: "/200 ml (2).png",
+    },
     { name: "500 ml Mineral Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml.png" },
-    { name: "500 ml Oxyalpha Water Bottle", size: "500 ml", price: "10.00", image: "/500 ml (2).png" },
-    { name: "1 Litre Mineral Water Bottle", size: "1 Litre", price: "20.00", image: "/1 litre.png" },
-    { name: "1 Litre Oxyalpha Water Bottle", size: "1 Litre", price: "20.00", image: "/1 litre (2).png" },
-    { name: "2 Litre Mineral Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre.png" },
-    { name: "2 Litre Oxyalpha Water Bottle", size: "2 Litre", price: "30.00", image: "/2 litre (2).png" },
+    {
+      name: "500 ml Oxyalpha Water Bottle",
+      size: "500 ml",
+      price: "10.00",
+      image: "/500 ml (2).png",
+    },
+    {
+      name: "1 Litre Mineral Water Bottle",
+      size: "1 Litre",
+      price: "20.00",
+      image: "/1 litre.png",
+    },
+    {
+      name: "1 Litre Oxyalpha Water Bottle",
+      size: "1 Litre",
+      price: "20.00",
+      image: "/1 litre (2).png",
+    },
+    {
+      name: "2 Litre Mineral Water Bottle",
+      size: "2 Litre",
+      price: "30.00",
+      image: "/2 litre.png",
+    },
+    {
+      name: "2 Litre Oxyalpha Water Bottle",
+      size: "2 Litre",
+      price: "30.00",
+      image: "/2 litre (2).png",
+    },
   ];
 
   return (
@@ -807,7 +925,7 @@ function Products() {
               key={product.image}
               data-reveal
               style={{ transitionDelay: `${i * 70}ms` }}
-              className="glass-card group flex min-h-[380px] flex-col items-center justify-end px-5 py-7 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)] sm:min-h-[410px] lg:px-6"
+              className="glass-card group flex min-h-[390px] flex-col items-center justify-end px-5 py-7 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,76,129,0.12)] sm:min-h-[420px] lg:px-6"
             >
               <div className="flex h-52 w-full items-center justify-center sm:h-60">
                 <img
@@ -817,26 +935,22 @@ function Products() {
                   className="max-h-full w-full object-contain drop-shadow-[0_18px_18px_rgba(15,23,42,0.12)] transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 280 18"
-                className="mt-8 h-5 w-full max-w-[280px] text-border"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M1 9c10 0 10-7 20-7s10 7 20 7 10-7 20-7 10 7 20 7 10-7 20-7 10 7 20 7 10-7 20-7 10 7 20 7 10-7 20-7 10 7 20 7 10-7 20-7 10 7 20 7 10-7 20-7 10 7 20 7"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
-              <p className="mt-6 text-base text-foreground/50">{product.size}</p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-[oklch(0.22_0.06_255)] xl:text-xl">
-                Mineral Water Bottle
-              </h3>
-              <p className="mt-6 text-xl font-semibold text-[oklch(0.72_0.16_220)]">
-                &#8377;{product.price}
+              <p className="mt-6 inline-flex rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                {product.size}
               </p>
+              <h3 className="mt-3 min-h-14 font-display text-2xl font-semibold leading-tight text-[oklch(0.22_0.06_255)] xl:text-xl">
+                {product.name}
+              </h3>
+              <div className="mt-6 flex w-full items-center justify-center rounded-2xl bg-white/72 px-4 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+                <span>
+                  <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground/45">
+                    Rate
+                  </span>
+                  <span className="block text-xl font-semibold text-[oklch(0.72_0.16_220)]">
+                    &#8377;{product.price}
+                  </span>
+                </span>
+              </div>
             </article>
           ))}
         </div>
@@ -961,6 +1075,8 @@ function Testimonials() {
 /* ---------- Contact ---------- */
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   return (
     <section id="contact" className="py-24">
       <div className="mx-auto max-w-7xl px-3 sm:px-4">
@@ -1014,14 +1130,26 @@ function Contact() {
           </div>
           <form
             data-reveal="right"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSent(true);
-              setTimeout(() => setSent(false), 3500);
-              (e.currentTarget as HTMLFormElement).reset();
+              const form = e.currentTarget as HTMLFormElement;
+              setSubmitting(true);
+              setError("");
+              try {
+                await submitWebsiteForm(form, "New Oxyalpha contact message");
+                setSent(true);
+                form.reset();
+                setTimeout(() => setSent(false), 3500);
+              } catch {
+                setError("Could not send message. Please try again or WhatsApp us.");
+              } finally {
+                setSubmitting(false);
+              }
             }}
             className="glass-card water-shine rounded-3xl p-6 sm:p-8"
           >
+            <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />
+            <input type="hidden" name="form_name" value="Contact form" />
             <h3 className="font-display text-xl text-primary sm:text-2xl">Send us a message</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <Field label="Full name" name="name" />
@@ -1043,9 +1171,10 @@ function Contact() {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="submit"
-                className="hover-lift inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground soft-shadow sm:w-auto"
+                disabled={submitting}
+                className="hover-lift inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground soft-shadow disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
               >
-                <Send className="h-4 w-4" /> Send message
+                <Send className="h-4 w-4" /> {submitting ? "Sending..." : "Send message"}
               </button>
               <a
                 href="https://wa.me/919545692550"
@@ -1057,9 +1186,10 @@ function Contact() {
               </a>
               {sent && (
                 <span className="text-sm text-[oklch(0.55_0.14_155)]">
-                  Thanks — we'll be in touch shortly.
+                  Thanks, we'll be in touch shortly.
                 </span>
               )}
+              {error && <span className="text-sm text-destructive">{error}</span>}
             </div>
           </form>
         </div>
